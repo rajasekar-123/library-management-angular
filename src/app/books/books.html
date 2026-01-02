@@ -1,0 +1,95 @@
+<h2>Books</h2>
+
+<mat-form-field appearance="outline" style="width:300px">
+  <mat-label>Search Books</mat-label>
+  <input matInput [(ngModel)]="searchText" (input)="search()">
+  <mat-icon matSuffix>search</mat-icon>
+</mat-form-field>
+
+<hr>
+
+
+<div style="display:flex; gap:15px; align-items:center">
+
+  <mat-form-field appearance="outline">
+    <mat-label>Book Title</mat-label>
+    <input matInput [(ngModel)]="newTitle">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Image URL</mat-label>
+    <input matInput [(ngModel)]="newImage">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary"
+          *ngIf="editId === null"
+          (click)="add()">
+    Add
+  </button>
+
+  <button mat-raised-button color="accent"
+          *ngIf="editId !== null"
+          (click)="update()">
+    Update
+  </button>
+</div>
+
+<hr>
+
+
+<div style="display:flex; flex-wrap:wrap; gap:20px">
+
+  <mat-card *ngFor="let book of filteredBooks"
+            style="width:220px">
+
+    <img mat-card-image
+         [src]="book.image"
+         style="height:250px; object-fit:cover">
+
+    <mat-card-title>{{ book.title }}</mat-card-title>
+
+    <mat-card-content>
+      <p>
+        Status:
+        <b [style.color]="book.available ? 'green' : 'red'">
+          {{ book.available ? 'Available' : 'Taken' }}
+        </b>
+      </p>
+
+      <p *ngIf="!book.available">
+        Taken By: {{ book.takenBy }}
+      </p>
+    </mat-card-content>
+
+    <mat-card-actions >
+
+
+      <button mat-icon-button color="primary"
+              *ngIf="book.available"
+              (click)="take(book.id)">
+        <mat-icon>library_add</mat-icon>
+      </button>
+
+      
+      <button mat-icon-button color="warn"
+              *ngIf="!book.available"
+              (click)="returnBook(book.id)">
+        <mat-icon>assignment_return</mat-icon>
+      </button>
+
+ 
+      <button mat-icon-button color="accent"
+              (click)="edit(book)">
+        <mat-icon>edit</mat-icon>
+      </button>
+
+     
+      <button mat-icon-button color="warn"
+              (click)="delete(book.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+
+    </mat-card-actions>
+
+  </mat-card>
+</div>
