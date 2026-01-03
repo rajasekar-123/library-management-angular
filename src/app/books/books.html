@@ -1,95 +1,148 @@
-<h2>Books</h2>
 
-<mat-form-field appearance="outline" style="width:300px">
+<h2 class="page-title">Library Mangement</h2>
+
+<mat-form-field appearance="outline" class="search-field">
   <mat-label>Search Books</mat-label>
-  <input matInput [(ngModel)]="searchText" (input)="search()">
+  <input
+    matInput
+    [(ngModel)]="searchText"
+    (input)="search()"
+    placeholder="Search by title"
+    aria-label="Search books"
+  />
   <mat-icon matSuffix>search</mat-icon>
 </mat-form-field>
 
 <hr>
 
 
-<div style="display:flex; gap:15px; align-items:center">
-
-  <mat-form-field appearance="outline">
+<div *ngIf="auth.isAdmin()">
+<div class="add-edit-container">
+<form #bookForm="ngForm">
+<div class="add-edit-container">
+  <mat-form-field appearance="outline" class="form-field">
     <mat-label>Book Title</mat-label>
-    <input matInput [(ngModel)]="newTitle">
+    <input
+      matInput
+      name="title"
+      [(ngModel)]="newTitle"
+      placeholder="Enter book title"
+      required/>
   </mat-form-field>
-
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" class="form-field">
     <mat-label>Image URL</mat-label>
-    <input matInput [(ngModel)]="newImage">
+    <input
+      matInput
+      name="image"
+      [(ngModel)]="newImage"
+      placeholder="Example: no-book.png"
+    />
   </mat-form-field>
-
-  <button mat-raised-button color="primary"
-          *ngIf="editId === null"
-          (click)="add()">
+  <button
+    mat-raised-button
+    color="primary"
+    class="add-btn"
+    (click)="add()"
+    *ngIf="editId === null">
     Add
   </button>
-
-  <button mat-raised-button color="accent"
-          *ngIf="editId !== null"
-          (click)="update()">
-    Update
-  </button>
 </div>
-
+</form>
+  <button
+    mat-raised-button
+    color="accent"
+    *ngIf="editId !== null"
+    (click)="update()" >
+    Update </button>
+</div>
+</div>
 <hr>
 
 
-<div style="display:flex; flex-wrap:wrap; gap:20px">
+<div class="books-grid">
 
-  <mat-card *ngFor="let book of filteredBooks"
-            style="width:220px">
+  <mat-card
+    class="book-card"
+    *ngFor="let book of filteredBooks;">
 
-    <img mat-card-image
-         [src]="book.image"
-         style="height:250px; object-fit:cover">
+ 
+<img mat-card-image [src]="book.image || 'no-book.png'"
+  alt="Cover image of {{ book.title }}"/>
 
-    <mat-card-title>{{ book.title }}</mat-card-title>
+  
 
+
+    <mat-card-title class="book-title">
+      {{ book.title }}
+    </mat-card-title>
+
+  
     <mat-card-content>
       <p>
         Status:
-        <b [style.color]="book.available ? 'green' : 'red'">
+        <b
+          [ngClass]="book.available ? 'status-available' : 'status-taken'"
+        >
           {{ book.available ? 'Available' : 'Taken' }}
         </b>
       </p>
 
-      <p *ngIf="!book.available">
+      <p *ngIf="!book.available" class="taken-by">
         Taken By: {{ book.takenBy }}
       </p>
     </mat-card-content>
 
-    <mat-card-actions >
 
+    <mat-card-actions class="book-actions">
 
-      <button mat-icon-button color="primary"
-              *ngIf="book.available"
-              (click)="take(book.id)">
+      <button
+        mat-icon-button
+        color="primary"
+        *ngIf="book.available"
+        (click)="take(book.id)"
+        aria-label="Take book"
+      >
         <mat-icon>library_add</mat-icon>
       </button>
 
       
-      <button mat-icon-button color="warn"
-              *ngIf="!book.available"
-              (click)="returnBook(book.id)">
-        <mat-icon>assignment_return</mat-icon>
-      </button>
+<button
+  mat-icon-button
+  color="warn"
+  *ngIf="!book.available && book.takenBy === currentUserEmail"
+  (click)="returnBook(book.id)"
+  aria-label="Return book"
+>
+  <mat-icon>assignment_return</mat-icon>
+</button>
 
- 
-      <button mat-icon-button color="accent"
-              (click)="edit(book)">
+
+
+
+      <button
+        mat-icon-button
+        color="accent"
+        *ngIf="auth.isAdmin()"
+        (click)="edit(book)"
+        aria-label="Edit book"
+      >
         <mat-icon>edit</mat-icon>
       </button>
 
-     
-      <button mat-icon-button color="warn"
-              (click)="delete(book.id)">
+
+      <button
+        mat-icon-button
+        color="warn"
+        *ngIf="auth.isAdmin()"
+        (click)="delete(book.id)"
+        aria-label="Delete book"
+      >
         <mat-icon>delete</mat-icon>
       </button>
 
     </mat-card-actions>
 
   </mat-card>
+
 </div>
+

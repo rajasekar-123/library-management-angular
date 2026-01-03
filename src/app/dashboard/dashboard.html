@@ -1,1 +1,84 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+
+
+  <mat-card class="dashboard-header">
+    <mat-card-title> Dashboard</mat-card-title>
+    <mat-card-subtitle>
+      Welcome, <b>{{ user.email }}</b>
+    </mat-card-subtitle>
+  </mat-card>
+
+  <div class="stats-grid" *ngIf="auth.isAdmin()">
+
+    <mat-card class="stat-card users">
+      <mat-icon>group</mat-icon>
+      <div>
+        <h3>Total Users</h3>
+        <p>{{ totalUsers }}</p>
+      </div>
+    </mat-card>
+</div>
+    <mat-card class="stat-card books">
+      <mat-icon>menu_book</mat-icon>
+      <div>
+        <h3>Total Books</h3>
+        <p>{{ totalBooks }}</p>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card taken">
+      <mat-icon>library_add</mat-icon>
+      <div>
+        <h3>Taken Books</h3>
+        <p>{{ takenBooks }}</p>
+      </div>
+    </mat-card>
+
+    
+<mat-card class="stat-card taken">
+  <mat-icon>library_books</mat-icon>
+  <div>
+    <h3>Books Taken By Me</h3>
+    <p>{{ takenbyme }}</p>
+  </div>
+</mat-card>
+
+
+    <mat-card class="stat-card returned">
+      <mat-icon>assignment_return</mat-icon>
+      <div>
+        <h3>Returned Books</h3>
+        <p>{{ returnedbooks }}</p>
+      </div>
+    </mat-card>
+
+  </div>
+
+
+  <mat-card class="action-card">
+    <div class="actions">
+
+      <button mat-raised-button color="primary" routerLink="/books">
+        <mat-icon>menu_book</mat-icon>
+        Books
+      </button>
+
+      <button mat-raised-button color="accent" routerLink="/take">
+        <mat-icon>library_add</mat-icon>
+        Take
+      </button>
+
+      <button mat-raised-button color="warn" routerLink="/return">
+        <mat-icon>assignment_return</mat-icon>
+        Return
+      </button>
+
+      <button mat-stroked-button color="warn" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        Logout
+      </button>
+
+    </div>
+  </mat-card>
+
+

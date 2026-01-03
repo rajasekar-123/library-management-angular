@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../services/auth';
 
 
 @Component({
@@ -14,7 +15,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatInputModule,
     MatIconModule],
-  templateUrl: '../books/books.html'
+  templateUrl: '../books/books.html',
+  styleUrl:'../books/books.css'
 })
 export class Books{
 [x: string]: any;
@@ -23,15 +25,22 @@ export class Books{
   books: Book[] = [];
   filteredBooks: Book[] = [];
   searchText = '';
-
   newTitle = '';
   newImage = '';
   editId: number | null = null;
+  currentUserEmail = '';
+
+  ngOnInit() {
+    const user = JSON.parse(localStorage.getItem('user')!);
+    this.currentUserEmail = user.email;
+  }
+
 
 
 
   constructor(
-    private bookService: BookService
+    private bookService: BookService,
+    public auth : AuthService
   ) {
     this.books = this.bookService.getBooks();
     this.filteredBooks = this.books;
@@ -70,12 +79,27 @@ export class Books{
   }
 
   take(id: number) {
-    this.bookService.takeBook(id);
+    const user = JSON.parse(localStorage.getItem('user')!);
+    this.bookService.takeBook(id, user.email);
   }
 
+
   returnBook(id: number) {
-    this.bookService.returnBook(id);
+    this.bookService.returnBook(id,this.currentUserEmail);
   }
+
+  getTotalBooks(): number {
+    return this.books.length;
+  }
+
+  getAvailableBooksCount(): number {
+    return this.books.filter(b => b.available).length;
+  }
+
+  getTakenBooksCount(): number {
+    return this.books.filter(b => !b.available).length;
+  }
+
 }
 
 

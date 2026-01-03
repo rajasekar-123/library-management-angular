@@ -1,54 +1,102 @@
 
-h2 {
-    margin-bottom: 16px;
-    font-weight: 600;
-    color: #3f51b5;
+:host {
+    display: block;
+    padding: 16px;
+    background: #f4f1ec;
+    min-height: 100vh;
+    font-family: "Roboto", sans-serif;
 }
 
 
-mat-form-field {
-    margin-right: 16px;
+.page-title {
+    font-weight: 700;
+    font-size: 26px;
+    color: #5d4037;
+    margin-bottom: 16px;
+}
+
+.search-field {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 20px;
 }
 
 
 .add-edit-container {
     display: flex;
-    gap: 16px;
     align-items: center;
-    margin-bottom: 20px;
+  
+    gap: 16px;
+    flex-wrap: wrap;
+    background: #fff8f0;
+    padding: 16px;
+    border-radius: 12px;
 }
+
+
+.form-field {
+    flex: 1;
+    min-width: 220px;
+}
+
+.add-btn {
+    height: 50px;
+   
+}
+
+
 
 
 .books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 24px;
+    justify-items: center;
+
+}
+
+
+.book-card {
+    width: 180px;
+  
+    max-width: 180px;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    flex-direction: column;
 }
 
 
-mat-card {
-    width: 220px;
-    border-radius: 12px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-mat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+.book-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 26px rgba(0, 0, 0, 0.2);
 }
 
 
-mat-card img {
-    height: 250px;
+.book-card img {
+    height: 240px;
+ 
     object-fit: cover;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
 }
 
 
-mat-card-title {
-    font-size: 16px;
+.book-title {
+    font-size: 15px;
     font-weight: 600;
+    color: #3e2723;
+    padding: 8px;
+    text-align: center;
+}
+
+
+mat-card-content {
+    font-size: 14px;
+    color: #4e342e;
+    padding: 0 8px;
 }
 
 
@@ -65,27 +113,38 @@ mat-card-title {
 
 .taken-by {
     font-size: 13px;
-    color: #555;
+    color: #6d4c41;
+    font-style: italic;
 }
 
 
-mat-card-actions {
+.book-actions {
+    margin-top: auto;
     display: flex;
-    justify-content: flex-end;
-    gap: 8px;
+    justify-content: space-around;
+    padding: 8px;
 }
 
 button.mat-icon-button:hover {
-    background-color: rgba(63, 81, 181, 0.08);
+    background-color: rgba(93, 64, 55, 0.12);
+    border-radius: 50%;
 }
 
+@media (max-width: 600px) {
 
-@media (max-width: 768px) {
     .books-grid {
-        justify-content: center;
+        grid-template-columns: repeat(2, 1fr);
+       
+        gap: 16px;
     }
 
-    mat-card {
-        width: 90%;
+    .book-card {
+        width: 150px;
+        max-width: 150px;
+    }
+
+    .book-card img {
+        height: 210px;
     }
 }
+
