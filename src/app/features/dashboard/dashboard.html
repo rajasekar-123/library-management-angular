@@ -59,28 +59,7 @@
   </div>
   
   <!-- Standalone Components Section -->
-  <mat-card class="standalone-view-card" *ngIf="showUsers || showTakenBooks || showReturnedBooks">
-    <app-user-list 
-      *ngIf="showUsers" 
-      [users]="allUsers" 
-      [showClose]="true" 
-      (close)="showUsers = false">
-    </app-user-list>
-
-    <app-taken-books 
-      *ngIf="showTakenBooks" 
-      [books]="takenBooksList" 
-      [showClose]="true" 
-      (close)="showTakenBooks = false">
-    </app-taken-books>
-
-    <app-returned-books 
-      *ngIf="showReturnedBooks" 
-      [transactions]="returnedTransactions" 
-      [showClose]="true" 
-      (close)="showReturnedBooks = false">
-    </app-returned-books>
-  </mat-card>
+  <!-- Standalone Components Section Removed - Now using separate routes -->
 
 
   <mat-card *ngIf="auth.isAdmin()" class="admin-history-card">

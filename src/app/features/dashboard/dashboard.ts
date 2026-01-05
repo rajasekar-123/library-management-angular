@@ -7,24 +7,19 @@ import { SampleDataService } from '../../core/services/sample-data.service';
 import { ResetDataService } from '../../core/services/reset-data.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { BookTransaction } from '../../shared/models/book-transaction.model';
-import { UserListComponent } from './user-list.component';
-import { TakenBooksComponent } from './taken-books.component';
-import { ReturnedBooksComponent } from './returned-books.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
+  selector: 'app-dashboard',
   standalone: true,
   imports: [
     CommonModule,
     RouterModule,
     MatCardModule,
     MatButtonModule,
-    MatIconModule,
-    UserListComponent,
-    TakenBooksComponent,
-    ReturnedBooksComponent
+    MatIconModule
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
@@ -42,14 +37,7 @@ export class DashboardComponent implements OnInit {
 
   transactions: BookTransaction[] = [];
 
- 
-  showUsers = false;
-  showTakenBooks = false;
-  showReturnedBooks = false;
-
   allUsers: any[] = [];
-  takenBooksList: any[] = [];
-  returnedTransactions: BookTransaction[] = [];
 
   constructor(
     public auth: AuthService,
@@ -77,13 +65,12 @@ export class DashboardComponent implements OnInit {
 
       this.transactions = this.bookservice.getAllTransactions();
 
-      this.returnedTransactions =
+      const returnedTransactions =
         this.transactions.filter(t => t.status === 'RETURNED');
-      this.returnedbooks = this.returnedTransactions.length;
+      this.returnedbooks = returnedTransactions.length;
     }
 
     this.allUsers = this.auth.getAllUsers();
-    this.takenBooksList = this.bookservice.getBooks().filter((b: any) => !b.available);
   }
 
   createSampleData() {
@@ -112,9 +99,7 @@ export class DashboardComponent implements OnInit {
 
   onTotalUsersClick() {
     if (this.auth.isAdmin()) {
-      this.showUsers = !this.showUsers;
-      this.showTakenBooks = false;
-      this.showReturnedBooks = false;
+      this.router.navigate(['/admin/users']);
     }
   }
 
@@ -124,9 +109,7 @@ export class DashboardComponent implements OnInit {
   }
 
   onTakenBooksClick() {
-    this.showTakenBooks = !this.showTakenBooks;
-    this.showUsers = false;
-    this.showReturnedBooks = false;
+    this.router.navigate(['/admin/taken-books']);
   }
 
   onMyBooksClick() {
@@ -136,9 +119,7 @@ export class DashboardComponent implements OnInit {
 
   onReturnedBooksClick() {
     if (this.auth.isAdmin()) {
-      this.showReturnedBooks = !this.showReturnedBooks;
-      this.showUsers = false;
-      this.showTakenBooks = false;
+      this.router.navigate(['/admin/returned-books']);
     }
   }
 
