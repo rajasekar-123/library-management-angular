@@ -11,6 +11,18 @@
       <form #signupForm="ngForm" (ngSubmit)="signup(signupForm)">
 
         <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Full Name</mat-label>
+          <input
+            matInput
+            type="text"
+            name="name"
+            [(ngModel)]="name"
+            required
+          />
+          <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label>Email</mat-label>
           <input
             matInput
@@ -20,6 +32,31 @@
             required
           />
           <mat-icon matSuffix>email</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Phone Number</mat-label>
+          <input
+            matInput
+            type="tel"
+            name="phone"
+            [(ngModel)]="phone"
+            required
+            pattern="[0-9]{10}"
+          />
+          <mat-icon matSuffix>phone</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Date of Birth</mat-label>
+          <input
+            matInput
+            type="date"
+            name="dob"
+            [(ngModel)]="dob"
+            required
+          />
+          <mat-icon matSuffix>cake</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">

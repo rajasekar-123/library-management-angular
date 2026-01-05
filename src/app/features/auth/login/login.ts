@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService} from '../services/auth';
+import { AuthService } from '../../../core/auth/auth.service';
+import { NotificationService } from '../../../core/services/notification.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatCommonModule } from '@angular/material/core';
@@ -14,7 +15,7 @@ import { MatCardActions, MatCard, MatCardSubtitle, MatCardModule } from "@angula
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule, MatCommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCardActions, MatCard, MatCardSubtitle, MatCardModule],
   templateUrl: './login.html',
-  styleUrl:'./login.css'
+  styleUrl: './login.css'
 })
 export class LoginComponent {
 
@@ -24,7 +25,8 @@ export class LoginComponent {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private notification: NotificationService
   ) { }
 
   login(form: any) {
@@ -33,7 +35,7 @@ export class LoginComponent {
     const success = this.authService.login(this.email, this.password);
 
     if (success) {
-      this.router.navigate(['/dashboard']); 
+      this.router.navigate(['/dashboard']);
     } else {
       this.error = 'Invalid email or password';
     }

@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { BookService, Book } from '../book';
+import { BookService } from '../../core/services/book.service';
+import { Book } from '../../shared/models/book.model';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthService } from '../services/auth';
+import { AuthService } from '../../core/auth/auth.service';
 
 
 @Component({
@@ -15,12 +16,10 @@ import { AuthService } from '../services/auth';
     MatButtonModule,
     MatInputModule,
     MatIconModule],
-  templateUrl: '../books/books.html',
-  styleUrl:'../books/books.css'
+  templateUrl: './books.html',
+  styleUrl: './books.css'
 })
-export class Books{
-[x: string]: any;
-
+export class BooksComponent {
 
   books: Book[] = [];
   filteredBooks: Book[] = [];
@@ -30,20 +29,17 @@ export class Books{
   editId: number | null = null;
   currentUserEmail = '';
 
-  ngOnInit() {
-    const user = JSON.parse(localStorage.getItem('user')!);
-    this.currentUserEmail = user.email;
-  }
-
-
-
-
   constructor(
     private bookService: BookService,
-    public auth : AuthService
+    public auth: AuthService
   ) {
     this.books = this.bookService.getBooks();
     this.filteredBooks = this.books;
+  }
+
+  ngOnInit() {
+    const user = JSON.parse(localStorage.getItem('user')!);
+    this.currentUserEmail = user.email;
   }
 
   search() {
@@ -80,26 +76,14 @@ export class Books{
 
   take(id: number) {
     const user = JSON.parse(localStorage.getItem('user')!);
-    this.bookService.takeBook(id, user.email);
+    const userName = user.name || user.email; // Use name if available, otherwise email
+    this.bookService.takeBook(id, user.email, userName);
   }
 
 
   returnBook(id: number) {
-    this.bookService.returnBook(id,this.currentUserEmail);
+    this.bookService.returnBook(id, this.currentUserEmail);
   }
-
-  getTotalBooks(): number {
-    return this.books.length;
-  }
-
-  getAvailableBooksCount(): number {
-    return this.books.filter(b => b.available).length;
-  }
-
-  getTakenBooksCount(): number {
-    return this.books.filter(b => !b.available).length;
-  }
-
 }
 
 
