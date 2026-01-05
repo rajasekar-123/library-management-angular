@@ -1,4 +1,4 @@
-/* ===== PREMIUM DASHBOARD DESIGN ===== */
+
 .dashboard-container {
     padding: 40px;
     min-height: 100vh;
@@ -12,7 +12,7 @@
     overflow-x: hidden;
 }
 
-/* ===== ANIMATED BACKGROUND GRADIENT ===== */
+
 .dashboard-container::before {
     content: '';
     position: fixed;
