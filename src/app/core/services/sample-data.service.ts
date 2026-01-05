@@ -11,7 +11,7 @@ export class SampleDataService {
                 bookId: 1,
                 bookTitle: 'Java Basics',
                 userEmail: 'user@gmail.com',
-                takenDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 days ago
+                takenDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
                 returnDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
                 status: 'RETURNED'
             },
@@ -19,15 +19,15 @@ export class SampleDataService {
                 bookId: 3,
                 bookTitle: 'Angular Guide',
                 userEmail: 'user@gmail.com',
-                takenDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), // 3 days ago
+                takenDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), 
                 status: 'TAKEN'
             },
             {
                 bookId: 5,
                 bookTitle: 'Javascript Guide',
                 userEmail: 'admin@gmail.com',
-                takenDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days ago
-                returnDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(), // 1 day ago
+                takenDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), 
+                returnDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
                 status: 'RETURNED'
             }
         ];
